@@ -1,37 +1,33 @@
 import React from 'react'
-import ToDoTitle from './ToDoTitle'
 import ToDoNew from './ToDoNew'
 import ToDoList from './ToDoList'
 
 class ToDoContainer extends React.Component {
 
-    constructor(props) {
-        super(props)
-        this.handleNewClick = this.handleNewClick.bind(this)
-        this.handleRemoveClick = this.handleRemoveClick.bind(this)
-        this.id = 0
-        this.state = {
-            listItems: []
-        }
+    state = {
+        listItems: [],
+        id: 0
     }
 
-    handleNewClick(newInput) {
+    handleNewClick = (newInput) => {
         if (newInput && newInput.trim().length !== 0) {
-            this.setState({listItems: [...this.state.listItems, {item: newInput, id: this.id}]})
-            this.id += 1
+            this.setState(oldState => ({
+                listItems: [...oldState.listItems, {item: newInput, id: oldState.id}],
+                id: oldState.id += 1
+            }))
         }
     }
 
-    handleRemoveClick(index) {
-        this.setState({
-            listItems: this.state.listItems.filter(i => i.id !== index)
-        })
+    handleRemoveClick = (index) => {
+        this.setState(oldState => ({
+            listItems: oldState.listItems.filter(i => i.id !== index)
+        }))
     }
 
     render() {
         return (
             <React.Fragment>
-                <ToDoTitle/>
+                <h1>To Do List</h1>
                 <ToDoNew handleNewClick={this.handleNewClick}/>
                 <ToDoList list={this.state.listItems} handleRemove={this.handleRemoveClick}/>
             </React.Fragment>

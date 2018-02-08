@@ -1,13 +1,15 @@
 import React from 'react'
-import ToDoItem from './ToDoItem'
 
 class ToDoList extends React.Component {
+    handleRemove = id => () => this.props.handleRemove(id)
 
     renderList(listItems) {
-        return listItems.map((listVal) => {
-            return <li key={listVal.id}><ToDoItem handleRemove={() => this.props.handleRemove(listVal.id)}
-                                                  task={listVal.item}/></li>
-        })
+        return listItems.map((listVal) =>
+            <li key={listVal.id}>
+                <label>{listVal.item}</label>
+                <button onClick={this.handleRemove(listVal.id)}>X</button>
+            </li>
+        )
     }
 
     render() {

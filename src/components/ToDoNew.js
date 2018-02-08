@@ -1,22 +1,26 @@
 import React from 'react'
 
 class ToDoNew extends React.Component {
-    constructor(props) {
-        super(props)
-        this.handleNewClick = this.handleNewClick.bind(this)
+
+    state = {
+        inputVal: ''
     }
 
-    handleNewClick() {
-        this.props.handleNewClick(this.refs.input.value)
-        this.refs.input.value = ''
+    handleChange = e => {
+        this.setState({inputVal: e.target.value})
+    }
+
+    handleNewClick = () => {
+        this.props.handleNewClick(this.state.inputVal)
+        this.setState({inputVal: ''})
     }
 
     render() {
         return (
-            <div>
-                <input placeholder='new' type='text' ref='input'/>
-                <button type='button' onClick={this.handleNewClick}>+</button>
-            </div>
+            <React.Fragment>
+                <input placeholder='new' value={this.state.inputVal} onChange={this.handleChange}/>
+                <button onClick={this.handleNewClick}>+</button>
+            </React.Fragment>
         )
     }
 }
